@@ -4,10 +4,35 @@ import java.util.Objects;
 
 public class Employee {
     private final String lastName, firstName;
+    private double salary;
+    private int department;
+
+    public Employee(String lastName, String firstName, int department, double salary) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.department = department;
+        this.salary = salary;
+    }
 
     public Employee(String lastName, String firstName) {
         this.lastName = lastName;
         this.firstName = firstName;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public int getDepartment() {
+        return this.department;
+    }
+
+    public void setDepartment(int department) {
+        this.department = department;
     }
 
     public String getLastName() {
@@ -16,6 +41,10 @@ public class Employee {
 
     public String getFirstName() {
         return firstName;
+    }
+
+    public String getFullName() {
+        return lastName + " " + firstName;
     }
 
 
@@ -34,9 +63,6 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "lastName='" + lastName + '\'' +
-                ", firstName='" + firstName + '\'' +
-                '}';
+        return "Employee{" + "lastName='" + lastName + '\'' + ", firstName='" + firstName + '\'' + '}';
     }
 }

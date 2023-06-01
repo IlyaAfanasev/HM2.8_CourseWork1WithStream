@@ -1,14 +1,12 @@
 package pro.sky.java.course2.hm2_8coursework1withstream.controller;
 
 
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pro.sky.java.course2.hm2_5coursework1inspring.Employee;
-import pro.sky.java.course2.hm2_5coursework1inspring.EmployeeService;
-import pro.sky.java.course2.hm2_5coursework1inspring.EmployeeServiceImpl;
+import pro.sky.java.course2.hm2_8coursework1withstream.Employee;
+import pro.sky.java.course2.hm2_8coursework1withstream.service.EmployeeService;
 
 import java.util.Collection;
 import java.util.List;
@@ -23,9 +21,10 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/add")
-    public Employee add(@RequestParam("name1") String lastName, @RequestParam("name2") String firstName) {
+    public Employee add(@RequestParam("name1") String lastName, @RequestParam("name2") String firstName,
+                        @RequestParam("department") int department, @RequestParam("salary") double salary) {
 
-        return employeeService.add(lastName, firstName);
+        return employeeService.add(lastName, firstName, department, salary);
     }
 
     @GetMapping(path = "/remove")
