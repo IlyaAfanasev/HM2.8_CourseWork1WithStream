@@ -59,22 +59,32 @@ public class EmployeeServiceImpl implements EmployeeService, EmployeeDepartmentS
 
     @Override
     public Optional<Employee> maxSalaryDepartment(int department) {
-        return Optional.of(employeesMap.values().stream().filter(e -> e.getDepartment() == department).max((e1, e2) -> (int) (e1.getSalary() - e2.getSalary())).get());
+        return employeesMap.values()
+                .stream()
+                .filter(e -> e.getDepartment() == department)
+                .max(Comparator.comparingDouble(Employee::getSalary));
 
     }
 
     @Override
     public Optional<Employee> minSalaryDepartment(int department) {
-        return Optional.of(employeesMap.values().stream().filter(e -> e.getDepartment() == department).min((e1, e2) -> (int) (e1.getSalary() - e2.getSalary())).get());
+        return employeesMap.values()
+                .stream()
+                .filter(e -> e.getDepartment() == department)
+                .min(Comparator.comparingDouble(Employee::getSalary));
     }
 
     @Override
-    public List<Employee> printDepartmentEmployees(int department) {
-        return employeesMap.values().stream().filter(e -> e.getDepartment() == department).collect(Collectors.toList());
+    public List<Employee> getDepartmentEmployees(int department) {
+        return employeesMap.values().stream().filter(e -> e.getDepartment() == department)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Employee> printEmployeesByDepartments() {
-        return employeesMap.values().stream().sorted(Comparator.comparingInt(Employee::getDepartment)).toList();
+    public Map<Integer, List<Employee>> getEmployeesByDepartments() {
+
+        return employeesMap.values()
+                .stream()
+                .collect(Collectors.groupingBy(Employee::getDepartment));
     }
 }

@@ -8,6 +8,7 @@ import pro.sky.java.course2.hm2_8coursework1withstream.Employee;
 import pro.sky.java.course2.hm2_8coursework1withstream.service.EmployeeDepartmentService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -31,14 +32,14 @@ public class EmployeeDepartmentController {
     }
 
     @GetMapping(value = "/all", params = {"department"})
-    public List<Employee> printDepartmentEmployees(@RequestParam("department") int department) {
-        return employeeDepartmentService.printDepartmentEmployees(department);
+    public List<Employee> getDepartmentEmployees(@RequestParam("department") int department) {
+        return employeeDepartmentService.getDepartmentEmployees(department);
 
     }
 
     @GetMapping("/all")
-    public List<Employee> printEmployeesByDepartments() {
-        return employeeDepartmentService.printEmployeesByDepartments();
+    public Map<Integer, List<Employee>> getEmployeesByDepartments() {
+        return employeeDepartmentService.getEmployeesByDepartments();
     }
 
 
