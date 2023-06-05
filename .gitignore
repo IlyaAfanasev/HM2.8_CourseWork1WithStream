@@ -31,3 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+/.mvn/
+/src/main/resources/
+/.mvn/
+/src/test/
+/src/test/
+/src/main/resources/
+/src/test/
+/src/main/resources/
