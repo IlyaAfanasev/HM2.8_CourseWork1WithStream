@@ -25,8 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService, EmployeeDepartmentS
 
     @Override
     public Employee add(String lastName, String firstName, int department, double salary) {
-        lastName = checkAndChangeString(lastName);
-        firstName = checkAndChangeString(firstName);
+    checkNames(lastName,firstName);
         Employee employee = new Employee(lastName, firstName, department, salary);
 
 
@@ -40,9 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService, EmployeeDepartmentS
 
     @Override
     public Employee remove(String lastName, String firstName) {
-        lastName = checkAndChangeString(lastName);
-        firstName = checkAndChangeString(firstName);
-
+        checkNames(lastName,firstName);
         Employee employee = new Employee(lastName, firstName);
         if (employeesMap.containsKey(employee.getFullName())) {
             return employeesMap.remove(employee.getFullName());
@@ -52,8 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService, EmployeeDepartmentS
 
     @Override
     public Employee find(String lastName, String firstName) {
-        lastName = checkAndChangeString(lastName);
-        firstName = checkAndChangeString(firstName);
+        checkNames(lastName,firstName);
 
         Employee employee = new Employee(lastName, firstName);
         if (employeesMap.containsKey(employee.getFullName())) {
@@ -98,15 +94,13 @@ public class EmployeeServiceImpl implements EmployeeService, EmployeeDepartmentS
                 .collect(Collectors.groupingBy(Employee::getDepartment));
     }
 
-    private static String checkAndChangeString(String name) {
-        name = deleteWhitespace(name);
+    private void checkNames(String lastName, String firstName) {
+        lastName=deleteWhitespace(lastName);
+        firstName=deleteWhitespace(firstName);
 
-        if (!isAlpha(name)) {
+        if (!(isAlpha(lastName)&&isAlpha(firstName))) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
-        name = capitalize(name.toLowerCase());
-
-        return name;
     }
 }

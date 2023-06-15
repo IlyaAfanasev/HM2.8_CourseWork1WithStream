@@ -1,6 +1,10 @@
 package pro.sky.java.course2.hm2_8coursework1withstream;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Objects;
+
+import static org.apache.commons.lang3.StringUtils.*;
 
 public class Employee {
     private final String lastName, firstName;
@@ -8,15 +12,15 @@ public class Employee {
     private int department;
 
     public Employee(String lastName, String firstName, int department, double salary) {
-        this.lastName = lastName;
-        this.firstName = firstName;
+        this.lastName = capitalize(deleteWhitespace(lastName));
+        this.firstName = capitalize(deleteWhitespace(firstName));
         this.department = department;
         this.salary = salary;
     }
 
     public Employee(String lastName, String firstName) {
-        this.lastName = lastName;
-        this.firstName = firstName;
+        this.lastName = capitalize(deleteWhitespace(lastName));
+        this.firstName = capitalize(deleteWhitespace(firstName));
     }
 
     public double getSalary() {
