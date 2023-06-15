@@ -12,6 +12,8 @@ import pro.sky.java.course2.hm2_8coursework1withstream.Exception.EmployeeNotFoun
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.lang3.StringUtils.*;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService, EmployeeDepartmentService {
     public final Map<String, Employee> employeesMap;
@@ -38,6 +40,8 @@ public class EmployeeServiceImpl implements EmployeeService, EmployeeDepartmentS
 
     @Override
     public Employee remove(String lastName, String firstName) {
+        lastName = checkAndChangeString(lastName);
+        firstName = checkAndChangeString(firstName);
 
         Employee employee = new Employee(lastName, firstName);
         if (employeesMap.containsKey(employee.getFullName())) {
@@ -48,6 +52,8 @@ public class EmployeeServiceImpl implements EmployeeService, EmployeeDepartmentS
 
     @Override
     public Employee find(String lastName, String firstName) {
+        lastName = checkAndChangeString(lastName);
+        firstName = checkAndChangeString(firstName);
 
         Employee employee = new Employee(lastName, firstName);
         if (employeesMap.containsKey(employee.getFullName())) {
@@ -92,15 +98,15 @@ public class EmployeeServiceImpl implements EmployeeService, EmployeeDepartmentS
                 .collect(Collectors.groupingBy(Employee::getDepartment));
     }
 
-    public static String checkAndChangeString(String string) {
-        string = StringUtils.deleteWhitespace(string);
+    private static String checkAndChangeString(String name) {
+        name = deleteWhitespace(name);
 
-        if (!StringUtils.isAlpha(string)) {
+        if (!isAlpha(name)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
-        string = StringUtils.capitalize(string);
+        name = capitalize(name.toLowerCase());
 
-        return string;
+        return name;
     }
 }
