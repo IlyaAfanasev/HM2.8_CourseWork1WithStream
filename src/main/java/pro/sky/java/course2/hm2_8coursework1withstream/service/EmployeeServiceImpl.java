@@ -1,13 +1,18 @@
 package pro.sky.java.course2.hm2_8coursework1withstream.service;
 
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import pro.sky.java.course2.hm2_8coursework1withstream.Employee;
 import pro.sky.java.course2.hm2_8coursework1withstream.Exception.EmployeeAlreadyAdded;
 import pro.sky.java.course2.hm2_8coursework1withstream.Exception.EmployeeNotFound;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.apache.commons.lang3.StringUtils.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService, EmployeeDepartmentService {
@@ -20,7 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService, EmployeeDepartmentS
 
     @Override
     public Employee add(String lastName, String firstName, int department, double salary) {
-
+    checkNames(lastName,firstName);
         Employee employee = new Employee(lastName, firstName, department, salary);
 
 
@@ -34,7 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService, EmployeeDepartmentS
 
     @Override
     public Employee remove(String lastName, String firstName) {
-
+        checkNames(lastName,firstName);
         Employee employee = new Employee(lastName, firstName);
         if (employeesMap.containsKey(employee.getFullName())) {
             return employeesMap.remove(employee.getFullName());
@@ -44,6 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService, EmployeeDepartmentS
 
     @Override
     public Employee find(String lastName, String firstName) {
+        checkNames(lastName,firstName);
 
         Employee employee = new Employee(lastName, firstName);
         if (employeesMap.containsKey(employee.getFullName())) {
@@ -86,5 +92,15 @@ public class EmployeeServiceImpl implements EmployeeService, EmployeeDepartmentS
         return employeesMap.values()
                 .stream()
                 .collect(Collectors.groupingBy(Employee::getDepartment));
+    }
+
+    private void checkNames(String lastName, String firstName) {
+        lastName=deleteWhitespace(lastName);
+        firstName=deleteWhitespace(firstName);
+
+        if (!(isAlpha(lastName)&&isAlpha(firstName))) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
     }
 }
